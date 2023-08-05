@@ -33,6 +33,13 @@ add block link  https://github.com/microsoft/pxt-neopixel
 ![image](https://github.com/emakefun/emakefun-docs/raw/master/docs/micro_bit/magic_bit/rgb_more_block.png)
 
 
+
+
+
+http://web.archive.org/web/20230128092002/https://test-doc-zh-cn.readthedocs.io/projects/emakefun/zh_CN/latest/micro_bit/magicbit/
+
+
+
 ## License
 MIT
 

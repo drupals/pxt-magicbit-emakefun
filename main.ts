@@ -187,6 +187,96 @@ namespace magicbit {
         setPwm((index - 1) * 2 + 1, 0, 0);
     }
 
+
+
+
+    
+    //% blockId=SuperBit_Servo block="Servo(180°)|num %num|value %value"
+    //% weight=97
+    //% blockGap=10
+    //% num.min=1 num.max=4 value.min=0 value.max=180
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=20
+    export function Servo(num: enServo, value: number): void {
+
+        // 50hz: 20,000 us
+        let us = (value * 1800 / 180 + 600); // 0.6 ~ 2.4
+        let pwm = us * 4096 / 20000;
+        setPwm(num, 0, pwm);
+
+    }
+
+    //% blockId=SuperBit_Servo2 block="Servo(270°)|num %num|value %value"
+    //% weight=96
+    //% blockGap=10
+    //% num.min=1 num.max=4 value.min=0 value.max=270
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=20
+    export function Servo2(num: enServo, value: number): void {
+
+        // 50hz: 20,000 us
+        let newvalue = Math.map(value, 0, 270, 0, 180);
+        let us = (newvalue * 1800 / 180 + 600); // 0.6 ~ 2.4
+        let pwm = us * 4096 / 20000;
+        setPwm(num, 0, pwm);
+
+    }
+
+    //% blockId=SuperBit_Servo3 block="Servo(360°)|num %num|pos %pos|value %value"
+    //% weight=96
+    //% blockGap=10
+    //% num.min=1 num.max=4 value.min=0 value.max=90
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=20
+    export function Servo3(num: enServo, pos: enPos, value: number): void {
+
+        // 50hz: 20,000 us
+        
+        if (pos == enPos.stop) {
+            let us = (86 * 1800 / 180 + 600); // 0.6 ~ 2.4
+            let pwm = us * 4096 / 20000;
+            setPwm(num, 0, pwm);
+        }
+        else if(pos == enPos.forward){ //0-90 -> 90 - 0
+            let us = ((90-value) * 1800 / 180 + 600); // 0.6 ~ 2.4
+            let pwm = us * 4096 / 20000;
+            setPwm(num, 0, pwm);
+        }
+        else if(pos == enPos.reverse){ //0-90 -> 90 -180
+            let us = ((90+value) * 1800 / 180 + 600); // 0.6 ~ 2.4
+            let pwm = us * 4096 / 20000;
+            setPwm(num, 0, pwm);
+        }
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
     /**
      * Servo Execute
      * @param index Servo Channel; eg: S1

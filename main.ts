@@ -186,12 +186,72 @@ namespace magicbit {
         setPwm((index - 1) * 2, 0, 0);
         setPwm((index - 1) * 2 + 1, 0, 0);
     }
+
+    /**
+     * Servo Execute
+     * @param index Servo Channel; eg: S1
+     * @param degree [0-180] degree of servo; eg: 0, 90, 180
+    */
+    //% blockId=magicbit_servo block="Servo|%index|degree %degree"
+    //% weight=100
+    //% degree.min=0 degree.max=180
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+    export function Servo(index: Servos, degree: number): void {
+        if (!initialized) {
+            initPCA9685()
+        }
+        // 50hz: 20,000 us
+        let v_us = (degree * 1800 / 180 + 600) // 0.6 ~ 2.4
+        let value = v_us * 4096 / 20000
+        setPwm(index + 7, 0, value)
+    }
+
+   /**
+         * Servo Execute
+         * @param index Servo Channel; eg: S1
+         * @param degree1 [0-180] degree of servo; eg: 0, 90, 180
+	 * @param degree2 [0-180] degree of servo; eg: 0, 90, 180
+	 * @param speed [1-10] speed of servo; eg: 1, 10
+    */
+    //% blockId=motorbit_servospeed block="Servo|%index|degree start %degree1|end %degree2|speed %speed"
+    //% weight=98
+    //% degree1.min=0 degree1.max=180
+    //% degree2.min=0 degree2.max=180
+    //% speed.min=1 speed.max=10
+    //% inlineInputMode=inline
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+    export function Servospeed(index: Servos, degree1: number, degree2: number, speed: number): void {
+        if (!initialized) {
+            initPCA9685()
+        }
+        // 50hz: 20,000 us
+        if(degree1 > degree2){
+            for(let i=degree1;i>degree2;i--){
+                let v_us = (i * 1800 / 180 + 600) // 0.6 ~ 2.4
+                let value = v_us * 4096 / 20000
+                basic.pause(4 * (10 - speed));
+                setPwm(index + 7, 0, value)
+            }
+        }
+        else{
+            for(let i=degree1;i<degree2;i++){
+                let v_us = (i * 1800 / 180 + 600) // 0.6 ~ 2.4
+                let value = v_us * 4096 / 20000
+                basic.pause(4 * (10 - speed));
+                setPwm(index + 7, 0, value)
+            }
+        }
+    }
+
+
+
+
 /**
- * Servo Execute
+ * Servo Execute 360
  * @param index Servo Channel; eg: S1
  * @param degree [0-360] degree of servo; eg: 0, 90, 180, 270, 360
 */
-//% blockId=magicbit_servo block="Servo|%index|degree %degree"
+//% blockId=magicbit_servo block="Servo360|%index|degree %degree"
 //% weight=100
 //% degree.min=0 degree.max=360
 //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
@@ -206,13 +266,13 @@ export function Servo(index: Servos, degree: number): void {
 }
 
 /**
- * Servo Execute
+ * Servo Execute 360
  * @param index Servo Channel; eg: S1
  * @param degree1 [0-360] degree of servo; eg: 0, 90, 180, 270, 360
  * @param degree2 [0-360] degree of servo; eg: 0, 90, 180, 270, 360
  * @param speed [1-10] speed of servo; eg: 1, 10
 */
-//% blockId=motorbit_servospeed block="Servo|%index|degree start %degree1|end %degree2|speed %speed"
+//% blockId=motorbit_servospeed block="Servo360|%index|degree start %degree1|end %degree2|speed %speed"
 //% weight=98
 //% degree1.min=0 degree1.max=360
 //% degree2.min=0 degree2.max=360

@@ -251,7 +251,7 @@ namespace magicbit {
  * @param index Servo Channel; eg: S1
  * @param degree [0-360] degree of servo; eg: 0, 90, 180, 270, 360
 */
-//% blockId=magicbit_servo1 block="Servo360|%index|degree %degree"
+//% blockId=magicbit_servo1 block="Servo3601|%index|degree %degree"
 //% weight=100
 //% degree.min=0 degree.max=360
 //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
